@@ -144,8 +144,8 @@ function App() {
                       <Col xs={{ order: todo.isBookmark ? 1 : 2 }} sm={12} md={6} key={index}>
                         <Card className={todo.isBookmark ? 'mb-3 shadow-sm' : 'mb-3'} style={{ backgroundColor: todo.color }}>
                           <Card.Body>
-                            <Card.Title className="fw-bold">{todo.title}</Card.Title>
-                            <Card.Text>{todo.body}</Card.Text>
+                            <Card.Title className={todo.isDone ? 'text-decoration-line-through fw-bold' : 'fw-bold'}>{todo.title}</Card.Title>
+                            <Card.Text className={todo.isDone ? 'text-decoration-line-through text-break' : 'text-break'}>{todo.body}</Card.Text>
                           </Card.Body>
                           <Card.Body>
                             <Button className="me-2" onClick={() => handleDoTodo(todo._id, todo.isDone)} variant={todo.isDone ? 'danger' : 'success'} size="sm"> <i className={todo.isDone ? 'bi bi-x-circle-fill' : 'bi bi-check-circle-fill'}></i> {todo.isDone ? 'Un Do' : 'Done'}</Button>
