@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://127.0.0.1:5000/todo/'
+const baseUrl = 'https://masih-todo-server.vercel.app/todo/'
 
 export const getAllTodos = async () => {
     const todos = axios.get(baseUrl)
