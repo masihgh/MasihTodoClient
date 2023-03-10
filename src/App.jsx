@@ -29,6 +29,15 @@ function reducer(todos, action) {
         return todo;
        })
     }
+    case 'DO_TODO':
+      return {payload: todos.payload.map(todo => {
+        if (todo._id === payload._id)
+        {
+          todo.isDone = payload.isDone;
+        }
+        return todo;
+       })
+    }
     case 'FETCH_TODOS':
       return {payload}
     default:
