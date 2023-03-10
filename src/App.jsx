@@ -17,8 +17,8 @@ const swalError = Swal.mixin({
   text: '5.x.x Server Error',
   icon: 'error',
   toast: true,
-  timerProgressBar:true,
-  timer:3000,
+  timerProgressBar: true,
+  timer: 3000,
   position: 'top-end',
   showConfirmButton: false
 })
@@ -26,8 +26,8 @@ const swalError = Swal.mixin({
 const swalOk = Swal.mixin({
   icon: 'success',
   toast: true,
-  timerProgressBar:true,
-  timer:5000,
+  timerProgressBar: true,
+  timer: 5000,
   position: 'top-end',
   showConfirmButton: false
 })
@@ -36,7 +36,7 @@ const swalCreating = Swal.mixin({
   title: 'Creating...',
   icon: 'info',
   toast: true,
-  timerProgressBar:true,
+  timerProgressBar: true,
   position: 'top-end',
   showConfirmButton: false
 })
@@ -98,19 +98,19 @@ function App() {
     setTodoData({ ...todoData, color: '#E6E6E6' })
     swalCreating.fire()
     axios.post('http://localhost:5000/todo', todoData)
-    .then(({ data }) => {
-      todosDispatch({ type: 'CREATE_TODO', payload: data })
-      swalOk.fire({
-        title: 'Todo Add Successful!',
+      .then(({ data }) => {
+        todosDispatch({ type: 'CREATE_TODO', payload: data })
+        swalOk.fire({
+          title: 'Todo Add Successful!',
+
+        })
 
       })
-      
-    })
-    .catch( (error)=>{
-      swalError.fire({
-        title: 'Todo Cannot Create. '
+      .catch((error) => {
+        swalError.fire({
+          title: 'Todo Cannot Create. '
+        })
       })
-    })
   };
 
   const handleStarTodo = (id, isStar) => {
@@ -118,7 +118,7 @@ function App() {
       isBookmark: !isStar
     }).then(({ data }) => {
       todosDispatch({ type: 'PIN_TODO', payload: data })
-    }).catch( (error)=>{
+    }).catch((error) => {
       swalError.fire({
         title: 'Todo Cannot Pinned.'
       })
@@ -129,7 +129,7 @@ function App() {
       isDone: !isDo
     }).then(({ data }) => {
       todosDispatch({ type: 'DO_TODO', payload: data })
-    }).catch( (error)=>{
+    }).catch((error) => {
       swalError.fire({
         title: 'Todo Cannot Do That. '
       })
@@ -154,7 +154,7 @@ function App() {
         })
       }
     })
-    
+
   };
 
   const [todoData, setTodoData] = useState({
@@ -194,21 +194,16 @@ function App() {
                   <i className="bi bi-bookmark-plus-fill"></i> Add Todo
                 </Button>
               </Form>
-
             </Card>
           </Col>
           <Col sm={12} md={9}>
             <Card body>
               <Row>
-
-                {/* if(todos.payload !== {}){
-        <Alert variant='info'>
-          Your Todo List Is Clean!
-        </Alert>
-      } */}
-
-
-                {todos.payload &&
+                {!todos.payload ?
+                  <Alert variant='info'>
+                    Your Todo List Is Clean!
+                  </Alert>
+                  :
                   todos.payload.map((todo, index) => {
                     return (
                       <Col xs={{ order: todo.isBookmark ? 1 : 2 }} sm={12} md={6} key={index}>
@@ -226,16 +221,12 @@ function App() {
                       </Col>
                     );
                   })}
-
               </Row>
-
-
             </Card>
           </Col>
         </Row>
       </Container>
       <Footer />
-
     </>
   )
 }
