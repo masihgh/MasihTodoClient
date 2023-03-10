@@ -28,7 +28,7 @@ function reducer(todos, action) {
         }
         return todo;
        })
-      }
+    }
     case 'FETCH_TODOS':
       return {payload}
     default:
@@ -62,9 +62,14 @@ function App() {
     axios.patch(`http://localhost:5000/todo/${id}`, {
       isBookmark: !isStar
     }).then(({data}) => {
-      console.log( 'meow' , !isStar)
-      console.log( 'data' , data)
       todosDispatch({ type: 'PIN_TODO', payload: data})
+    })
+  }
+  const handleDoTodo = (id,isDone) => {
+    axios.patch(`http://localhost:5000/todo/${id}`, {
+      isDo: !isDone
+    }).then(({data}) => {
+      todosDispatch({ type: 'DO_TODO', payload: data})
     })
   }
   const handleDeleteTodo = (id) => {
