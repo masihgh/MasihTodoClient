@@ -65,9 +65,9 @@ function App() {
       todosDispatch({ type: 'PIN_TODO', payload: data})
     })
   }
-  const handleDoTodo = (id,isDone) => {
+  const handleDoTodo = (id,isDo) => {
     axios.patch(`http://localhost:5000/todo/${id}`, {
-      isDo: !isDone
+      isDone: !isDo
     }).then(({data}) => {
       todosDispatch({ type: 'DO_TODO', payload: data})
     })
@@ -139,7 +139,7 @@ function App() {
                     <Card.Text>{todo.body}</Card.Text>
                     </Card.Body>
                     <Card.Body>
-                      <Button className="me-2" variant="success" size="sm"> <i className="bi bi-check-circle-fill"></i> Done Task</Button>
+                      <Button className="me-2" onClick={() => handleDoTodo(todo._id,todo.isDone)} variant={todo.isDone ? 'danger' : 'success'} size="sm"> <i className="bi bi-check-circle-fill"></i> {todo.isDone ? 'Un Do' : 'Done'}</Button>
                       
                       
                       
