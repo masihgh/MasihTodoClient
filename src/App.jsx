@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { Button, Stack, Container, Row, Col, Card, Form, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card, Form, Alert } from 'react-bootstrap';
 
 import './assets/sass/App.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { TwitterPicker } from 'react-color';
-import axios from 'axios'
 import {swalWithBootstrapButtons,swalError,swalOk,swalCreating} from './Toasts'
+import { createTodo,getAllTodos,deleteTodo,updateTodo } from "./api/TodoApi";
 
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 
-
-
-// const [todos, setTodos] = useState([]);
 function reducer(todos, action) {
   const payload = action.payload;
   switch (action.type) {
@@ -52,25 +49,21 @@ function App() {
 
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/todo/').then(({ data }) => {
+
+    getAllTodos().then(({ data }) => {
       todosDispatch({ type: 'FETCH_TODOS', payload: data });
     })
   }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTodoData({ ...todoData, body: '' })
-    setTodoData({ ...todoData, title: '' })
-    setTodoData({ ...todoData, color: '#E6E6E6' })
     swalCreating.fire()
-    axios.post('http://localhost:5000/todo', todoData)
+    createTodo(todoData)
       .then(({ data }) => {
         todosDispatch({ type: 'CREATE_TODO', payload: data })
         swalOk.fire({
           title: 'Todo Add Successful!',
-
         })
-
       })
       .catch((error) => {
         swalError.fire({
@@ -80,9 +73,7 @@ function App() {
   };
 
   const handleStarTodo = (id, isStar) => {
-    axios.patch(`http://localhost:5000/todo/${id}`, {
-      isBookmark: !isStar
-    }).then(({ data }) => {
+    updateTodo(id,{isBookmark: !isStar}).then(({ data }) => {
       todosDispatch({ type: 'PIN_TODO', payload: data })
     }).catch((error) => {
       swalError.fire({
@@ -91,9 +82,7 @@ function App() {
     })
   }
   const handleDoTodo = (id, isDo) => {
-    axios.patch(`http://localhost:5000/todo/${id}`, {
-      isDone: !isDo
-    }).then(({ data }) => {
+    updateTodo(id,{isDone: !isDo}).then(({ data }) => {
       todosDispatch({ type: 'DO_TODO', payload: data })
     }).catch((error) => {
       swalError.fire({
@@ -115,7 +104,7 @@ function App() {
           'Your file has been deleted.',
           'success'
         )
-        axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
+        deleteTodo(id).then(() => {
           todosDispatch({ type: 'DELETE_TODO', payload: id })
         })
       }
