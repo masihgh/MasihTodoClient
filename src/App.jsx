@@ -115,7 +115,7 @@ function App() {
   const [todoData, setTodoData] = useState({
     title: "",
     body: "",
-    color: "#E6E6E6",
+    color: "#FFFFFF",
     isBookmark: false,
     isHidden: false,
   });
@@ -160,7 +160,7 @@ function App() {
                 </Alert> : ''
                 }
                 {todos.payload &&
-                  todos.payload.map((todo, index) => {
+                  todos.payload.slice(0).reverse().map((todo, index) => {
                     return (
                       <Col xs={{ order: todo.isBookmark ? 1 : 2 }} sm={12} md={6} key={index}>
                         <Card className={todo.isBookmark ? 'mb-3 shadow-sm' : 'mb-3'} style={{ backgroundColor: todo.color }}>
