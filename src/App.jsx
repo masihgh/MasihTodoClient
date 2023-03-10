@@ -169,7 +169,7 @@ function App() {
                           </Card.Body>
                           <Card.Body>
                             <Button className="me-2" onClick={() => handleDoTodo(todo._id, todo.isDone)} variant={todo.isDone ? 'danger' : 'success'} size="sm"> <i className={todo.isDone ? 'bi bi-x-circle-fill' : 'bi bi-check-circle-fill'}></i> {todo.isDone ? 'Un Do' : 'Done'}</Button>
-                            <Button className="me-2" onClick={() => handleStarTodo(todo._id, todo.isBookmark)} variant={todo.isBookmark ? 'info' : 'dark'} size="sm"> <i className="bi bi-star-fill"></i> {todo.isBookmark ? 'Pinned' : 'Pin'}</Button>
+                            <Button className="me-2" onClick={() => handleStarTodo(todo._id, todo.isBookmark)} variant={todo.isBookmark ? 'dark' : 'outline-dark'} size="sm"> <i className="bi bi-star-fill"></i> {todo.isBookmark ? 'Pinned' : 'Pin'}</Button>
                             <Button className="me-2" onClick={() => handleDeleteTodo(todo._id)} variant="danger" size="sm"> <i className="bi bi-trash3"></i> </Button>
                           </Card.Body>
                         </Card>
