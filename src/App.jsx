@@ -19,8 +19,9 @@ function reducer(todos, action) {
     case 'CREATE_TODO':
       return {payload:[...todos.payload , payload]}
     case 'DELETE_TODO':
-      console.log('dd' , {payload: [todos.payload.filter(t => t._id !== payload)]});
       return {payload: todos.payload.filter(t => t._id !== payload)}
+    case 'STAR_TODO':
+      return {payload: todos.payload}
     case 'FETCH_TODOS':
       return {payload}
     default:
@@ -98,7 +99,7 @@ function App() {
             </Form.Group>
             
             <Button variant="primary" type="submit">
-            <i className="bi bi-bookmark-plus-fill"></i> Submit
+            <i className="bi bi-bookmark-plus-fill"></i> Add Todo
             </Button>
           </Form>
 
@@ -126,7 +127,12 @@ function App() {
                     </Card.Body>
                     <Card.Body>
                       <Button className="me-2" variant="success" size="sm"> <i className="bi bi-check-circle-fill"></i> Done Task</Button>
-                      <Button className="me-2" onClick={() => handleStarTodo(todo._id,todo.isBookmark)} variant="dark" size="sm"> <i className="bi bi-star-fill"></i> Star</Button>
+                      
+                      
+                      
+                      <Button className="me-2" onClick={() => handleStarTodo(todo._id,todo.isBookmark)} variant={todo.isBookmark ? 'light' : 'dark'} size="sm"> <i className="bi bi-star-fill"></i> {todo.isBookmark ? 'Pinned' : 'Pin'}</Button>
+                      
+
                       <Button className="me-2" onClick={() => handleDeleteTodo(todo._id)} variant="danger" size="sm"> <i className="bi bi-trash3"></i> </Button>
                     </Card.Body>
                   </Card>
