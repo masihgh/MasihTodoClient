@@ -6,40 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { TwitterPicker } from 'react-color';
 import axios from 'axios'
 import Swal from 'sweetalert2'
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
-const swalError = Swal.mixin({
-  text: '5.x.x Server Error',
-  icon: 'error',
-  toast: true,
-  timerProgressBar: true,
-  timer: 3000,
-  position: 'top-end',
-  showConfirmButton: false
-})
-
-const swalOk = Swal.mixin({
-  icon: 'success',
-  toast: true,
-  timerProgressBar: true,
-  timer: 5000,
-  position: 'top-end',
-  showConfirmButton: false
-})
-
-const swalCreating = Swal.mixin({
-  title: 'Creating...',
-  icon: 'info',
-  toast: true,
-  timerProgressBar: true,
-  position: 'top-end',
-  showConfirmButton: false
-})
+import {swalWithBootstrapButtons,swalError,swalOk,swalCreating} from './Toasts'
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -199,11 +166,12 @@ function App() {
           <Col sm={12} md={9}>
             <Card body>
               <Row>
-                {!todos.payload ?
-                  <Alert variant='info'>
-                    Your Todo List Is Clean!
-                  </Alert>
-                  :
+                {todos == {} ?
+                 <Alert variant='info'>
+                  Your Todo List Is Clean!
+                </Alert> : ''
+                }
+                {todos.payload &&
                   todos.payload.map((todo, index) => {
                     return (
                       <Col xs={{ order: todo.isBookmark ? 1 : 2 }} sm={12} md={6} key={index}>
