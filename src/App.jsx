@@ -20,7 +20,16 @@ const swalError = Swal.mixin({
   timerProgressBar:true,
   timer:3000,
   position: 'top-end',
-  showConfirmButton: false,
+  showConfirmButton: false
+})
+
+const swalOk = Swal.mixin({
+  icon: 'success',
+  toast: true,
+  timerProgressBar:true,
+  timer:5000,
+  position: 'top-end',
+  showConfirmButton: false
 })
 
 import Header from './components/Header';
@@ -89,14 +98,9 @@ function App() {
     axios.post('http://localhost:5000/todo', todoData)
     .then(({ data }) => {
       todosDispatch({ type: 'CREATE_TODO', payload: data })
-      Swal.fire({
+      swalOk.fire({
         title: 'Todo Add Successful!',
-        icon: 'success',
-        toast: true,
-        timerProgressBar:true,
-        timer:5000,
-        position: 'top-end',
-        showConfirmButton: false,
+
       })
       
     })
@@ -145,10 +149,6 @@ function App() {
         )
         axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
           todosDispatch({ type: 'DELETE_TODO', payload: id })
-        }).catch( (error)=>{
-          swalError.fire({
-            title: 'Todo Cannot Delete. '
-          })
         })
       }
     })
