@@ -20,8 +20,15 @@ function reducer(todos, action) {
       return {payload:[...todos.payload , payload]}
     case 'DELETE_TODO':
       return {payload: todos.payload.filter(t => t._id !== payload)}
-    case 'STAR_TODO':
-      return {payload: todos.payload}
+    case 'PIN_TODO':
+      return {payload: todos.payload.map(todo => {
+        if (todo._id === payload._id)
+        {
+          todo.isBookmark = payload.isBookmark;
+        }
+        return todo;
+       })
+      }
     case 'FETCH_TODOS':
       return {payload}
     default:
@@ -53,10 +60,11 @@ function App() {
   
   const handleStarTodo = (id,isStar) => {
     axios.patch(`http://localhost:5000/todo/${id}`, {
-      id: id,
-      isBookmark: (isStar)? true : false
+      isBookmark: !isStar
     }).then(({data}) => {
-      todosDispatch({ type: 'STAR_TODO', payload: data})
+      console.log( 'meow' , !isStar)
+      console.log( 'data' , data)
+      todosDispatch({ type: 'PIN_TODO', payload: data})
     })
   }
   const handleDeleteTodo = (id) => {
@@ -119,8 +127,8 @@ function App() {
 		{todos.payload &&
       todos.payload.map((todo, index) => {
               return (
-                <Col sm={12} md={6} key={index}>
-                  <Card className="mb-3" style={{backgroundColor:todo.color}}>
+                <Col xs={{ order: todo.isBookmark ? 1 : 2 }} sm={12} md={6} key={index}>
+                  <Card className={todo.isBookmark ? 'mb-3 shadow-sm' : 'mb-3'} style={{backgroundColor:todo.color}}>
                     <Card.Body>
                     <Card.Title className="fw-bold">{todo.title}</Card.Title>
                     <Card.Text>{todo.body}</Card.Text>
