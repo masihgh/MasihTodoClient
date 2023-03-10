@@ -1,12 +1,12 @@
 import Swal from 'sweetalert2'
-const swalWithBootstrapButtons = Swal.mixin({
+export const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
     cancelButton: 'btn btn-danger'
   },
   buttonsStyling: false
 })
-const swalError = Swal.mixin({
+export const swalError = Swal.mixin({
   text: '5.x.x Server Error',
   icon: 'error',
   toast: true,
@@ -16,7 +16,7 @@ const swalError = Swal.mixin({
   showConfirmButton: false
 })
 
-const swalOk = Swal.mixin({
+export const swalOk = Swal.mixin({
   icon: 'success',
   toast: true,
   timerProgressBar: true,
@@ -25,7 +25,7 @@ const swalOk = Swal.mixin({
   showConfirmButton: false
 })
 
-const swalCreating = Swal.mixin({
+export const swalCreating = Swal.mixin({
   title: 'Creating...',
   icon: 'info',
   toast: true,
@@ -34,4 +34,3 @@ const swalCreating = Swal.mixin({
   showConfirmButton: false
 })
 
-export default {swalWithBootstrapButtons,swalError,swalOk,swalCreating}
