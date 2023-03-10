@@ -12,7 +12,9 @@ dist
 dist-ssr
 *.local
 .yarn
-
+yarn.lock
+.pnp.cjs
+.pnp.loeader.mjs
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
