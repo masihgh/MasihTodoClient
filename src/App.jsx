@@ -6,6 +6,22 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { TwitterPicker } from 'react-color';
 import axios from 'axios'
 import Swal from 'sweetalert2'
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+const swalError = Swal.mixin({
+  text: '5.x.x Server Error',
+  icon: 'error',
+  toast: true,
+  timerProgressBar:true,
+  timer:3000,
+  position: 'top-end',
+  showConfirmButton: false,
+})
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -70,7 +86,8 @@ function App() {
       position: 'top-end',
       showConfirmButton: false,
     })
-    axios.post('http://localhost:5000/todo', todoData).then(({ data }) => {
+    axios.post('http://localhost:5000/todo', todoData)
+    .then(({ data }) => {
       todosDispatch({ type: 'CREATE_TODO', payload: data })
       Swal.fire({
         title: 'Todo Add Successful!',
@@ -83,6 +100,11 @@ function App() {
       })
       
     })
+    .catch( (error)=>{
+      swalError.fire({
+        title: 'Todo Cannot Create. '
+      })
+    })
   };
 
   const handleStarTodo = (id, isStar) => {
@@ -90,6 +112,10 @@ function App() {
       isBookmark: !isStar
     }).then(({ data }) => {
       todosDispatch({ type: 'PIN_TODO', payload: data })
+    }).catch( (error)=>{
+      swalError.fire({
+        title: 'Todo Cannot Pinned.'
+      })
     })
   }
   const handleDoTodo = (id, isDo) => {
@@ -97,10 +123,14 @@ function App() {
       isDone: !isDo
     }).then(({ data }) => {
       todosDispatch({ type: 'DO_TODO', payload: data })
+    }).catch( (error)=>{
+      swalError.fire({
+        title: 'Todo Cannot Do That. '
+      })
     })
   }
   const handleDeleteTodo = (id) => {
-    Swal.fire({
+    swalWithBootstrapButtons.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
@@ -108,13 +138,17 @@ function App() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
+        swalWithBootstrapButtons.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
         )
         axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
           todosDispatch({ type: 'DELETE_TODO', payload: id })
+        }).catch( (error)=>{
+          swalError.fire({
+            title: 'Todo Cannot Delete. '
+          })
         })
       }
     })
