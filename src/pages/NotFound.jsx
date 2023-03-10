@@ -4,9 +4,11 @@ function NotFound() {
     return (<>
         <Container>
             <Row>
-                <Col sm={12} md={3}>
-                <Card body>
-
+                <Col sm={12}>
+                <Card body className="p-5">
+                    <span className="display-6">404 - We Lost This Page🐴!</span>
+                    <br />
+                    <span className="h3">we search high and low but couldn't find what you're looking for. Let's find a better place for you to go.</span>
                 </Card>
                 </Col>
             </Row>
