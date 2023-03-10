@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { Button, Container, Row, Col, Card, Form, Alert } from 'react-bootstrap';
 import { TwitterPicker } from 'react-color';
-import {swalWithBootstrapButtons,swalError,swalOk,swalCreating} from './Toasts'
+import {swalWithBootstrapButtons,swalError,swalOk,swalCreating} from '../Toasts'
 import { createTodo,getAllTodos,deleteTodo,updateTodo } from "../api/TodoApi";
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 
 function reducer(todos, action) {
@@ -123,7 +121,6 @@ function Home() {
   
     return (
       <>
-        <Header />
         <Container>
           <Row>
             <Col sm={12} md={3}>
@@ -179,7 +176,6 @@ function Home() {
             </Col>
           </Row>
         </Container>
-        <Footer />
       </>
   );
 }
