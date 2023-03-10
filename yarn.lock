@@ -2309,6 +2309,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sweetalert2@npm:^11.7.3":
+  version: 11.7.3
+  resolution: "sweetalert2@npm:11.7.3"
+  checksum: 6d31e6b0fb7fca21ed34c34be97d23043349d2f1c89005bf370245388b057926cf147c33301ced90ac2fe15bada7d3e4277073b5cc36e6c131a9a6f99525ff5a
+  languageName: node
+  linkType: hard
+
 "tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.13
   resolution: "tar@npm:6.1.13"
@@ -2363,6 +2370,7 @@ __metadata:
     react-color: ^2.19.3
     react-dom: ^18.2.0
     sass: ^1.58.3
+    sweetalert2: ^11.7.3
     vite: ^4.1.0
   languageName: unknown
   linkType: soft
