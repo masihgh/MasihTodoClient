@@ -4,7 +4,7 @@ function Header() {
     return (
         <Navbar bg="primary" variant="dark" expand="lg" className='mb-3'>
         <Container>
-          <Navbar.Brand href="#home"> <i className="bi bi-stickies-fill"></i> Masih Todo</Navbar.Brand>
+          <Navbar.Brand href="#home"> <i className="bi bi-ui-checks"></i> Masih Todo</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

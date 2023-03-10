@@ -1,33 +1,92 @@
+import React, { useState,useEffect,useReducer } from "react";
 import { Button,Stack,Container,Row,Col,Card,Form,Alert } from 'react-bootstrap';
-import Header from './components/Header';
+
 import './assets/sass/App.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import Footer from './components/Footer';
 import { TwitterPicker } from 'react-color';
+import axios from 'axios'
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+
+
+
+// const [todos, setTodos] = useState([]);
+function reducer(todos, action) {
+  const payload = action.payload;
+  switch (action.type) {
+    case 'CREATE_TODO':
+      return {payload:[...todos.payload , payload]}
+    case 'DELETE_TODO':
+      console.log('dd' , {payload: [todos.payload.filter(t => t._id !== payload)]});
+      return {payload: todos.payload.filter(t => t._id !== payload)}
+    case 'FETCH_TODOS':
+      return {payload}
+    default:
+      throw Error('Unknown action.');
+      break;
+  }
+}
 
 function App() {
+  const [todos, todosDispatch] = useReducer(reducer, {});
+
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:5000/todo/').then(({data}) => {
+      todosDispatch({ type: 'FETCH_TODOS', payload: data});
+    })
+  } , [])
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    setTodoData({ ...todoData, body: '' })
+    setTodoData({ ...todoData, title: '' })
+    setTodoData({ ...todoData, color: '#E6E6E6' })
+
+	  axios.post('http://localhost:5000/todo', todoData).then(({data}) => {
+      todosDispatch({ type: 'CREATE_TODO', payload: data})
+    })
+  };
+  
+  const handleDeleteTodo = (id) => {
+    axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
+		  todosDispatch({ type: 'DELETE_TODO', payload: id})
+    })
+  };
+
+  const [todoData, setTodoData] = useState({
+    title: "",
+    body: "",
+    color: "#E6E6E6",
+    isBookmark:false,
+    isHidden:false,
+  });
+
+  const handleChangeComplete = (color, event) => {
+    setTodoData({ ...todoData, color: color.hex });
+  };
+  
   return (
     <>
     <Header />
     <Container>
       <Row>
-        <Col sm={12} md={4}>
-          <Card body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Col sm={12} md={3}>
+          <Card body style={{backgroundColor:todoData.color}}>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="Title">
               <Form.Label> <i className='bi bi-sticky'></i> Title</Form.Label>
-              <Form.Control type="email" placeholder="My Todooo Name..." />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
+              <Form.Control type="text" placeholder="My Todooo title..." onChange={(e) => setTodoData({ ...todoData, title: e.target.value })}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Group className="mb-3" controlId="Task">
               <Form.Label><i className='bi bi-body-text'></i> Task</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control as="textarea" rows={3} onChange={(e) => setTodoData({ ...todoData, body: e.target.value })}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3" controlId="Color">
               <Form.Label> <i className="bi bi-palette"></i> Todo Color</Form.Label>
-              <TwitterPicker className='w-100'/>
+              <TwitterPicker colors={['#AFBCCF','#FFAFA3','#80CAFF','#FFC470','#FFADE7','#E6E6E6','#75D7F0','#FFD966','#D9B8FF','#85E0A3']} className='w-100' onChangeComplete={handleChangeComplete} color={ todoData.color }/>
             </Form.Group>
             
             <Button variant="primary" type="submit">
@@ -37,24 +96,39 @@ function App() {
 
           </Card>
         </Col>
-        <Col sm={12} md={8}>
-          <Card body>
-            <Alert variant='info'>
-              Your Todo List Is Clean!
-            </Alert>
-            <hr />
-            <Card style={{ width: '18rem' }}>
-              <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit, omnis sint aperiam consequuntur recusandae, doloremque minus eveniet quidem quisquam dolore quo molestiae? Ullam rerum eos reiciendis nobis impedit, velit dolore?
-                </Card.Text>
-              </Card.Body>
-              <Card.Body>
-                <Card.Link className="btn btn-sm btn-warning" href="#"> <i className="bi bi-trash3"></i> </Card.Link>
-                <Card.Link className="btn btn-sm btn-danger" href="#"> <i className="bi bi-star-fill"></i> </Card.Link>
-              </Card.Body>
-            </Card>
+        <Col sm={12} md={9}>
+          <Card body>			
+			<Row>
+    
+      {/* if(todos.payload !== {}){
+        <Alert variant='info'>
+          Your Todo List Is Clean!
+        </Alert>
+      } */}
+      
+    
+		{todos.payload &&
+      todos.payload.map((todo, index) => {
+              return (
+                <Col sm={12} md={6} key={index}>
+                  <Card className="mb-3" style={{backgroundColor:todo.color}}>
+                    <Card.Body>
+                    <Card.Title className="fw-bold">{todo.title}</Card.Title>
+                    <Card.Text>{todo.body}</Card.Text>
+                    </Card.Body>
+                    <Card.Body>
+                      <Button className="me-2" variant="success" size="sm"> <i className="bi bi-check-circle-fill"></i> Done Task</Button>
+                      <Button className="me-2" variant="dark" size="sm"> <i className="bi bi-star-fill"></i> Star</Button>
+                      <Button className="me-2" onClick={() => handleDeleteTodo(todo._id)} variant="danger" size="sm"> <i className="bi bi-trash3"></i> </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+      })}
+
+			</Row>
+
+			
           </Card>
         </Col>
       </Row>
