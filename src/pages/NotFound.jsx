@@ -12,7 +12,7 @@ function NotFound() {
                     <br />
                     <span className="h3">we search high and low but couldn't find what you're looking for. Let's find a better place for you to go.</span>
                     <br /><br />
-                    <Button onClick={()=>navigate('/')}>Go Home Page -></Button>
+                    <Button onClick={()=>navigate('/')}>Go Home Page » </Button>
                 </Card>
                 </Col>
             </Row>
