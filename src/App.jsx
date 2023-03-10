@@ -5,7 +5,6 @@ import './assets/sass/App.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { TwitterPicker } from 'react-color';
 import axios from 'axios'
-import Swal from 'sweetalert2'
 import {swalWithBootstrapButtons,swalError,swalOk,swalCreating} from './Toasts'
 
 import Header from './components/Header';
