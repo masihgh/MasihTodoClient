@@ -32,6 +32,15 @@ const swalOk = Swal.mixin({
   showConfirmButton: false
 })
 
+const swalCreating = Swal.mixin({
+  title: 'Creating...',
+  icon: 'info',
+  toast: true,
+  timerProgressBar:true,
+  position: 'top-end',
+  showConfirmButton: false
+})
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -87,14 +96,7 @@ function App() {
     setTodoData({ ...todoData, body: '' })
     setTodoData({ ...todoData, title: '' })
     setTodoData({ ...todoData, color: '#E6E6E6' })
-    Swal.fire({
-      title: 'Creating...',
-      icon: 'info',
-      toast: true,
-      timerProgressBar:true,
-      position: 'top-end',
-      showConfirmButton: false,
-    })
+    swalCreating.fire()
     axios.post('http://localhost:5000/todo', todoData)
     .then(({ data }) => {
       todosDispatch({ type: 'CREATE_TODO', payload: data })
