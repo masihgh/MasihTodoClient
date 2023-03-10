@@ -62,9 +62,26 @@ function App() {
     setTodoData({ ...todoData, body: '' })
     setTodoData({ ...todoData, title: '' })
     setTodoData({ ...todoData, color: '#E6E6E6' })
-
+    Swal.fire({
+      title: 'Creating...',
+      icon: 'info',
+      toast: true,
+      timerProgressBar:true,
+      position: 'top-end',
+      showConfirmButton: false,
+    })
     axios.post('http://localhost:5000/todo', todoData).then(({ data }) => {
       todosDispatch({ type: 'CREATE_TODO', payload: data })
+      Swal.fire({
+        title: 'Todo Add Successful!',
+        icon: 'success',
+        toast: true,
+        timerProgressBar:true,
+        timer:5000,
+        position: 'top-end',
+        showConfirmButton: false,
+      })
+      
     })
   };
 
@@ -83,9 +100,25 @@ function App() {
     })
   }
   const handleDeleteTodo = (id) => {
-    axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
-      todosDispatch({ type: 'DELETE_TODO', payload: id })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
+          todosDispatch({ type: 'DELETE_TODO', payload: id })
+        })
+      }
     })
+    
   };
 
   const [todoData, setTodoData] = useState({
