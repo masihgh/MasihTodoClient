@@ -540,6 +540,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@remix-run/router@npm:1.4.0"
+  checksum: 707dce35a2b8138005cf19e63f6fd3c4da05b4b892e9e9118e8b727c3b95953efe27307ca2df35084044df30fa1fc367cf0bbc98d1ded9020c82e61e6242caaf
+  languageName: node
+  linkType: hard
+
 "@restart/hooks@npm:^0.4.6, @restart/hooks@npm:^0.4.7":
   version: 0.4.9
   resolution: "@restart/hooks@npm:0.4.9"
@@ -2032,6 +2039,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:^6.9.0":
+  version: 6.9.0
+  resolution: "react-router-dom@npm:6.9.0"
+  dependencies:
+    "@remix-run/router": 1.4.0
+    react-router: 6.9.0
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 4d593491ab8db5611feda70002c62902baebb84d5c1c5e5b6172496f31f91130deee132bf4240dea634a88cb86c76d6da348f15b9cd5e5197be455efd88edf72
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.9.0":
+  version: 6.9.0
+  resolution: "react-router@npm:6.9.0"
+  dependencies:
+    "@remix-run/router": 1.4.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: b2a5f42e042bee7a7f116ca7817b0e58359e5353d84887c9fe7a633d7490c03b1e0ae37cd01830c2a381e3d1e7d501bb4751e53cc3d491e25f36582d3f6e0546
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.2":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -2369,6 +2400,7 @@ __metadata:
     react-bootstrap: ^2.7.2
     react-color: ^2.19.3
     react-dom: ^18.2.0
+    react-router-dom: ^6.9.0
     sass: ^1.58.3
     sweetalert2: ^11.7.3
     vite: ^4.1.0
