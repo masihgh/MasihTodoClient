@@ -50,6 +50,14 @@ function App() {
     })
   };
   
+  const handleStarTodo = (id,isStar) => {
+    axios.patch(`http://localhost:5000/todo/${id}`, {
+      id: id,
+      isBookmark: (isStar)? true : false
+    }).then(({data}) => {
+      todosDispatch({ type: 'STAR_TODO', payload: data})
+    })
+  }
   const handleDeleteTodo = (id) => {
     axios.delete(`http://localhost:5000/todo/${id}`).then(() => {
 		  todosDispatch({ type: 'DELETE_TODO', payload: id})
@@ -118,7 +126,7 @@ function App() {
                     </Card.Body>
                     <Card.Body>
                       <Button className="me-2" variant="success" size="sm"> <i className="bi bi-check-circle-fill"></i> Done Task</Button>
-                      <Button className="me-2" variant="dark" size="sm"> <i className="bi bi-star-fill"></i> Star</Button>
+                      <Button className="me-2" onClick={() => handleStarTodo(todo._id,todo.isBookmark)} variant="dark" size="sm"> <i className="bi bi-star-fill"></i> Star</Button>
                       <Button className="me-2" onClick={() => handleDeleteTodo(todo._id)} variant="danger" size="sm"> <i className="bi bi-trash3"></i> </Button>
                     </Card.Body>
                   </Card>
